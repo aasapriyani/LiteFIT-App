@@ -1,0 +1,7 @@
+{
+  "name": "LiteFIT_Real",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

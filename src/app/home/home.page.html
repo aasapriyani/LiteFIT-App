@@ -1,0 +1,119 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-blue" style="--padding-top: env(safe-area-inset-top);">
+    <ion-title>
+      <span class="brand-lite">Lite</span><span class="brand-fit">FIT</span> 🔥
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="sporty-layout">
+    <div class="container-padding">
+
+      <div *ngIf="isFirstTime" class="onboarding">
+        <div class="welcome-box">
+          <div class="icon-onboarding">
+            <ion-icon name="person-circle" style="font-size: 6rem; color: #ff8800;"></ion-icon>
+          </div>
+          <h2 style="font-weight: 800; font-size: 1.8rem;">Selamat Datang!</h2>
+          <p style="margin-bottom: 25px;">Siapa nama atlet hari ini?</p>
+          
+          <div class="input-wrapper" style="margin-bottom: 20px;">
+            <ion-item lines="none" class="custom-ion-item">
+              <ion-input 
+              type="text"
+                [(ngModel)]="userName" 
+                placeholder="Ketik namamu..." 
+                class="custom-input"
+                style="--padding-start: 15px; font-size: 1.2rem; min-height: 60px;"
+                enterkeyhint="done"
+                (keyup.enter)="userName && userName.trim().length > 0 ? saveInitialName() : null">
+              </ion-input>
+            </ion-item>
+          </div>
+          
+          <ion-button 
+            (click)="saveInitialName()" 
+            expand="block" 
+            shape="round" 
+            color="warning" 
+            class="btn-start" 
+            style="height: 60px; font-weight: bold; font-size: 1.1rem;"
+            [disabled]="!userName || userName.trim().length === 0">
+            MULAI SEKARANG
+          </ion-button>
+        </div>
+      </div>
+
+      <div *ngIf="!isFirstTime && currentTab === 'LATIHAN'">
+        <h2 class="welcome-txt">SEMANGAT, {{ userName }}! 👋</h2>
+        
+        <div class="timer-card">
+          <p class="streak-label">STREAK: {{ streak }} HARI</p>
+          <h1 [class.active]="isRunning">{{ formatTime(seconds) }}</h1>
+          <ion-button (click)="toggleTimer()" [color]="isRunning ? 'danger' : 'warning'" expand="block" shape="round" style="height: 55px; font-weight: bold;">
+            {{ isRunning ? 'STOP' : 'MULAI GERAK' }}
+          </ion-button>
+        </div>
+
+        <div class="quote-card"><p>"{{ currentQuote }}"</p></div>
+
+        <div class="progress-box">
+          <div class="progress-txt"><span>PROGRESS HARI INI</span><span>{{ getPercent() }}%</span></div>
+          <div class="bar-track">
+            <div class="bar-fill" [style.width]="getPercent() + '%'"></div>
+          </div>
+        </div>
+
+        <div class="mission-grid">
+          <div *ngFor="let item of activities" 
+               class="activity-box" 
+               [class.done]="item.done" 
+               [style.--act-color]="item.color" 
+               (click)="toggleDone(item)">
+            <div class="icon-circle">
+              <ion-icon [name]="item.icon" class="act-icon"></ion-icon>
+            </div>
+            <p class="act-name">{{ item.name }}</p>
+            <ion-icon *ngIf="item.done" name="checkmark-done-circle" class="check-icon"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!isFirstTime && currentTab === 'PROGRES'">
+        <div class="level-card">
+          <div class="level-badge" [style.background]="getLevel().color">
+            <ion-icon [name]="getLevel().icon"></ion-icon>
+            <span>RANK: {{ getLevel().rank }}</span>
+          </div>
+          <h3 class="profile-name">{{ userName }}</h3>
+        </div>
+
+        <h3 class="section-title">STATISTIK HARIAN</h3>
+        <div class="stat-card">
+          <div class="chart-container">
+            <div class="chart-bar" style="height: 30%;"><small>SN</small></div>
+            <div class="chart-bar active" [style.height]="getPercent() + '%'"><small>HARI INI</small></div>
+            <div class="chart-bar" style="height: 15%;"><small>MG</small></div>
+          </div>
+          <p class="chart-label">Pencapaian: {{ getPercent() }}%</p>
+        </div>
+        <ion-button fill="clear" color="light" expand="block" (click)="resetName()">
+  GANTI NAMA PROFIL
+</ion-button>
+</div>
+
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="!isFirstTime" style="padding-bottom: env(safe-area-inset-bottom);">
+  <div class="bottom-nav">
+    <div class="nav-item" [class.active]="currentTab === 'LATIHAN'" (click)="currentTab = 'LATIHAN'">
+      <ion-icon name="flash"></ion-icon><span>LATIHAN</span>
+    </div>
+    <div class="nav-item" [class.active]="currentTab === 'PROGRES'" (click)="currentTab = 'PROGRES'">
+      <ion-icon name="stats-chart"></ion-icon><span>PROGRES</span>
+    </div>
+  </div>
+</ion-footer>
