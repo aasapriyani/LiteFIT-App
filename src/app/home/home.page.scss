@@ -78,8 +78,12 @@ ion-header {
     text-align: center;
     --padding-top: 15px;
     --padding-bottom: 15px;
+    --background: transparent !important;  // **BARU: Biar kotak putih ilang**
+      pointer-events: auto !important;      // **BARU: Biar bisa diklik**
+      /* ------------------------------------ */
+    }
   }
-}
+
 
 .btn-start {
   margin-top: 15px;
@@ -186,4 +190,19 @@ ion-header {
 .profile-name {
   color: #ffffff !important;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+/* --- Taruh di baris paling akhir file --- */
+
+.custom-input {
+  --background: transparent !important;
+  --color: #001a33 !important;
+  --padding-start: 10px !important;
+  --padding-end: 10px !important;
+  
+  width: 100% !important;   /* Memenuhi lebar kotak orange */
+  height: 60px !important;  /* Memenuhi tinggi kotak orange */
+  display: block !important;
+  pointer-events: auto !important;
+  z-index: 999 !important;
+  position: relative !important;
 }
