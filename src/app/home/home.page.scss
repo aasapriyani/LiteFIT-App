@@ -192,17 +192,23 @@ ion-header {
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 /* --- Taruh di baris paling akhir file --- */
-
+/* Gaya untuk Input Utama */
 .custom-input {
   --background: transparent !important;
   --color: #001a33 !important;
-  --padding-start: 10px !important;
-  --padding-end: 10px !important;
+  --padding-start: 15px !important;
+  --highlight-height: 0 !important; 
+  --inner-padding-end: 0 !important;
+  --border-style: none !important;
+  --box-shadow: none !important;
   
-  width: 100% !important;   /* Memenuhi lebar kotak orange */
-  height: 60px !important;  /* Memenuhi tinggi kotak orange */
-  display: block !important;
-  pointer-events: auto !important;
-  z-index: 999 !important;
-  position: relative !important;
+  /* Menghilangkan garis ganjel di semua browser/android */
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+  
+  width: 100% !important;
+  height: 60px !important;
+  caret-color: #001a33 !important;
+  font-weight: bold !important;
 }

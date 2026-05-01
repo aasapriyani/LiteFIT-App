@@ -19,19 +19,21 @@
           <p style="margin-bottom: 25px;">Siapa nama atlet hari ini?</p>
           
           <div class="input-wrapper" style="margin-bottom: 20px;">
-            <ion-item lines="none" class="custom-ion-item">
-              <ion-input 
-              type="text"
-                [(ngModel)]="userName" 
-                placeholder="Ketik namamu..." 
-                class="custom-input"
-                style="--padding-start: 15px; font-size: 1.2rem; min-height: 60px;"
-                enterkeyhint="done"
-                (keyup.enter)="userName && userName.trim().length > 0 ? saveInitialName() : null" 
-                (click)="showKeyboard()">
-              </ion-input>
-            </ion-item>
-          </div>
+  <ion-item lines="none" class="custom-ion-item">
+    <ion-input
+      type="text"
+      [(ngModel)]="userName"
+      placeholder="Ketik namamu..."
+      class="custom-input"
+      enterkeyhint="done"
+      (keyup.enter)="userName && userName.trim().length > 0 ? saveInitialName() : null"
+      (click)="showKeyboard()">
+    </ion-input>
+  </ion-item>
+</div>
+
+              
+            
           
           <ion-button 
             (click)="saveInitialName()" 
