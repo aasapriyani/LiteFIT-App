@@ -64,25 +64,7 @@ ion-header {
 }
 
 /* Wrapper Input Profil agar Mudah Diketik */
-.input-wrapper { 
-  background: #f4f7f9 !important; 
-  border: 3px solid #ff8800; 
-  border-radius: 15px; 
-  margin: 20px 0; 
-  padding: 5px;
-  
-  .custom-input { 
-    --color: #001a33 !important; 
-    font-weight: 900; 
-    font-size: 1.2rem; // Lebih besar agar mudah dibaca
-    text-align: center;
-    --padding-top: 15px;
-    --padding-bottom: 15px;
-    --background: transparent !important;  // **BARU: Biar kotak putih ilang**
-      pointer-events: auto !important;      // **BARU: Biar bisa diklik**
-      /* ------------------------------------ */
-    }
-  }
+
 
 
 .btn-start {
@@ -193,22 +175,42 @@ ion-header {
 }
 /* --- Taruh di baris paling akhir file --- */
 /* Gaya untuk Input Utama */
+/* --- SOLUSI FINAL: INPUT BERSIH TANPA TABRAKAN --- */
+
+.input-wrapper { 
+  background: #f4f7f9 !important; 
+  border: 3px solid #ff8800; 
+  border-radius: 15px; 
+  margin: 20px 0; 
+  padding: 5px;
+  overflow: hidden; /* Tambahan agar rapi */
+}
+
+.custom-ion-item {
+  --background: transparent !important; 
+  --inner-padding-end: 0 !important;
+  --padding-start: 0 !important;
+  --border-style: none !important;
+  --highlight-height: 0 !important; /* Matikan highlight di level item */
+  box-shadow: none !important;
+  border: none !important;
+}
+
 .custom-input {
   --background: transparent !important;
   --color: #001a33 !important;
+  --highlight-height: 0 !important; /* WAJIB: Hapus garis ganjel kursor */
   --padding-start: 15px !important;
-  --highlight-height: 0 !important; 
-  --inner-padding-end: 0 !important;
-  --border-style: none !important;
-  --box-shadow: none !important;
+  --padding-end: 15px !important;
   
-  /* Menghilangkan garis ganjel di semua browser/android */
   box-shadow: none !important;
   border: none !important;
   outline: none !important;
   
   width: 100% !important;
   height: 60px !important;
-  caret-color: #001a33 !important;
-  font-weight: bold !important;
+  font-weight: 900 !important;
+  font-size: 1.2rem !important;
+  text-align: center;
+  caret-color: #ff8800 !important; /* Warna kursor orange */
 }
