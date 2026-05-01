@@ -10,6 +10,7 @@ import {
   eggOutline, shieldHalfOutline, flameOutline, trophyOutline,
   accessibilityOutline, refreshCircleOutline, walkOutline, fitnessOutline, waterOutline, eyeOutline
 } from 'ionicons/icons';
+import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,13 @@ export class HomePage implements OnInit {
   timer: any;
   currentQuote: string = "";
   streak: number = 0;
+
+  async showKeyboard() {
+    await Keyboard.show();
+  }
+
+  
+
 
   // Audio Lokal
   whistleSound = new Audio('assets/sounds/whistle.mp3');

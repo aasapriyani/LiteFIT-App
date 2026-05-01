@@ -27,7 +27,7 @@
                 class="custom-input"
                 style="--padding-start: 15px; font-size: 1.2rem; min-height: 60px;"
                 enterkeyhint="done"
-                (keyup.enter)="userName && userName.trim().length > 0 ? saveInitialName() : null">
+                (keyup.enter)="userName && userName.trim().length > 0 ? saveInitialName() : null"(click)="showKeyboard()" >
               </ion-input>
             </ion-item>
           </div>
