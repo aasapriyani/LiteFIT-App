@@ -177,40 +177,68 @@ ion-header {
 /* Gaya untuk Input Utama */
 /* --- SOLUSI FINAL: INPUT BERSIH TANPA TABRAKAN --- */
 
+/* 1. Pembungkus Luar (Kotak Orange) */
 .input-wrapper { 
   background: #f4f7f9 !important; 
   border: 3px solid #ff8800; 
   border-radius: 15px; 
-  margin: 20px 0; 
+  margin-bottom: 20px; /* Jarak bawah yang kamu mau tadi */
   padding: 5px;
-  overflow: hidden; /* Tambahan agar rapi */
+  overflow: hidden; 
+  display: flex;
+  align-items: center;
 }
 
+/* 2. Item Ionic (Penghubung) */
 .custom-ion-item {
   --background: transparent !important; 
   --inner-padding-end: 0 !important;
   --padding-start: 0 !important;
   --border-style: none !important;
-  --highlight-height: 0 !important; /* Matikan highlight di level item */
-  box-shadow: none !important;
-  border: none !important;
+  --highlight-height: 0 !important; /* Matiin garis fokus default */
+  --inner-border-width: 0 !important;
+  width: 100%;
 }
 
+/* 3. Input Utama (Si Target Kursor) */
 .custom-input {
+  /* KUNCI: Hilangkan highlight Android yang bikin ganjel */
+  --highlight-height: 0 !important; 
+  --highlight-color-focused: transparent !important;
+  --show-full-highlight: 0 !important;
+  --show-bottom-highlight: 0 !important;
+  
   --background: transparent !important;
   --color: #001a33 !important;
-  --highlight-height: 0 !important; /* WAJIB: Hapus garis ganjel kursor */
   --padding-start: 15px !important;
   --padding-end: 15px !important;
   
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-  
+  /* Styling Text */
   width: 100% !important;
   height: 60px !important;
   font-weight: 900 !important;
   font-size: 1.2rem !important;
   text-align: center;
-  caret-color: #ff8800 !important; /* Warna kursor orange */
+  
+  /* Kursor warna orange agar cantik */
+  caret-color: #ff8800 !important; 
+}
+
+/* 4. Tambahan Khusus Android Native */
+.native-input {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.custom-input {
+  --color: #333333 !important; /* Warna teks saat ngetik */
+  --placeholder-color: #999999 !important; /* Warna tulisan 'Masukkan Nama Anda' */
+  --placeholder-opacity: 1 !important;
+  color: #333333 !important;
+  font-weight: 500;
+  text-align: center; /* Supaya teks di tengah sesuai kursor kamu */
+}
+
+/* Tambahan khusus untuk memastikan input terlihat di Android */
+ion-input {
+  color: black !important;
 }

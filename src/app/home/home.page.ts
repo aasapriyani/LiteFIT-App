@@ -29,11 +29,12 @@ export class HomePage implements OnInit {
   timer: any;
   currentQuote: string = "";
   streak: number = 0;
+  // ... baris streak: number = 0;
 
-  async showKeyboard() {
-    await Keyboard.show();
-  }
+  // Pastikan ada di dalam class
+  
 
+  
   
 
 
@@ -70,6 +71,11 @@ export class HomePage implements OnInit {
       'eye-outline': eyeOutline
     });
   }
+
+
+  
+
+
 
   async ngOnInit() {
     await this.storage.create();

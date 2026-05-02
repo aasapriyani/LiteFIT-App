@@ -35,8 +35,27 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
-ion-input {
+/* Taruh di paling bawah global.scss */
+
+ion-input, .native-input, input {
   --highlight-height: 0 !important;
   --show-full-highlight: 0 !important;
   --show-bottom-highlight: 0 !important;
+  --border-style: none !important;
+  --box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* Menghilangkan garis saat input diklik (FOCUSED) */
+.item-has-focus, .item-should-reveal-highlight {
+  --highlight-background: transparent !important;
+  --show-full-highlight: 0 !important;
+}
+
+/* Paksa kursor agar tidak punya 'ekor' atau ganjelan */
+ion-input {
+  margin: 0 !important;
+  padding: 0 !important;
 }
