@@ -228,17 +228,39 @@ ion-header {
 .native-input {
   outline: none !important;
   box-shadow: none !important;
+  
+  /* --- KODE BARU DIMULAI DISINI --- */
+  display: block;             /* Biar bisa diatur margin-nya */
+  margin: 20px auto;          /* Ini kunci biar kotaknya ke tengah (center) */
+  width: 85%;                 /* Lebar kotak biar nggak mepet layar */
+  height: 50px;               /* Tinggi kotak biar enak diklik */
+  background-color: #ffffff !important; /* Wajib putih */
+  color: #000000 !important;   /* Wajib hitam teksnya */
+  border: 2px solid #ffc409;  /* Border kuning biar cantik */
+  border-radius: 10px;        /* Sudut melengkung */
+  text-align: center;         /* Tulisan "Masukkan Nama" jadi di tengah */
+  font-size: 16px;            /* Ukuran font standar */
+  /* --- KODE BARU SELESAI --- */
 }
 .custom-input {
-  --color: #333333 !important; /* Warna teks saat ngetik */
-  --placeholder-color: #999999 !important; /* Warna tulisan 'Masukkan Nama Anda' */
+  --color: #000000 !important;
+  --placeholder-color: #666666 !important;
   --placeholder-opacity: 1 !important;
-  color: #333333 !important;
+  color: black !important;
   font-weight: 500;
-  text-align: center; /* Supaya teks di tengah sesuai kursor kamu */
+  text-align: center;
+
+  /* TAMBAHAN KUNCI SUPAYA BISA DIKETIK */
+  pointer-events: auto !important; 
+  position: relative !important;
+  z-index: 9999 !important; 
 }
 
-/* Tambahan khusus untuk memastikan input terlihat di Android */
-ion-input {
-  color: black !important;
+/* Pastikan pembungkus luarnya tidak menghalangi sentuhan */
+.welcome-box {
+  pointer-events: none !important;
+}
+
+.welcome-box > * {
+  pointer-events: auto !important;
 }

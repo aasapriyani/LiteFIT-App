@@ -18,17 +18,14 @@
           <h2 style="font-weight: 800; font-size: 1.8rem;">Selamat Datang!</h2>
           <p style="margin-bottom: 25px;">Siapa nama atlet hari ini?</p>
           
-          <div class="input-wrapper" style="margin-bottom: 20px;"> <ion-item lines="none" class="custom-ion-item">
-    <ion-input 
-      mode="md"
-      fill="none"
-      class="custom-input"
-      type="text" 
-      placeholder="Masukkan Nama Anda"
-      [(ngModel)]="userName">
-    </ion-input>
-  </ion-item>
-</div>
+          <input 
+  [(ngModel)]="userName" 
+  placeholder="Masukkan Nama Anda" 
+  class="native-input">
+
+<button (click)="startApp()" class="start-button">
+  MULAI SEKARANG
+</button>
 
               
             
