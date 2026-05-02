@@ -225,22 +225,39 @@ ion-header {
 }
 
 /* 4. Tambahan Khusus Android Native */
+/* KOTAK LUAR (GARIS ORANGE) */
+.orange-border-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 85%;
+  height: 90px;               /* Tinggi kotak orange luar */
+  margin: 20px auto;
+  
+  background-color: #ffffff;  
+  border: 3px solid #ffc409;  /* Garis Orange seperti di WA */
+  border-radius: 20px;
+  
+  pointer-events: none;       /* Supaya klik tembus ke input di dalam */
+}
+
+/* KOTAK DALAM (TEMPAT NGETIK) */
 .native-input {
+  pointer-events: auto !important; 
+  
+  display: block;
+  width: 85%;
+  height: 45px;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ddd !important; /* Garis tipis kotak putih */
+  border-radius: 10px;
+  
+  text-align: center;
+  font-size: 16px;
   outline: none !important;
   box-shadow: none !important;
-  
-  /* --- KODE BARU DIMULAI DISINI --- */
-  display: block;             /* Biar bisa diatur margin-nya */
-  margin: 20px auto;          /* Ini kunci biar kotaknya ke tengah (center) */
-  width: 85%;                 /* Lebar kotak biar nggak mepet layar */
-  height: 50px;               /* Tinggi kotak biar enak diklik */
-  background-color: #ffffff !important; /* Wajib putih */
-  color: #000000 !important;   /* Wajib hitam teksnya */
-  border: 2px solid #ffc409;  /* Border kuning biar cantik */
-  border-radius: 10px;        /* Sudut melengkung */
-  text-align: center;         /* Tulisan "Masukkan Nama" jadi di tengah */
-  font-size: 16px;            /* Ukuran font standar */
-  /* --- KODE BARU SELESAI --- */
 }
 .custom-input {
   --color: #000000 !important;
@@ -250,17 +267,17 @@ ion-header {
   font-weight: 500;
   text-align: center;
 
-  /* TAMBAHAN KUNCI SUPAYA BISA DIKETIK */
+  /* --- TAMBAHKAN INI SUPAYA KOTAKNYA MUNCUL --- */
+  display: block;
+  width: 85%;                /* Lebar kotak */
+  margin: 15px auto;         /* Biar ke tengah */
+  background: #ffffff !important; /* Warna dalam kotak putih */
+  border: 2px solid #ffc409 !important; /* GARIS ORANGE NYA DI SINI */
+  border-radius: 10px;       /* Biar pojokannya gak tajam */
+  height: 50px;              /* Tinggi kotak */
+  /* -------------------------------------------- */
+
   pointer-events: auto !important; 
   position: relative !important;
   z-index: 9999 !important; 
-}
-
-/* Pastikan pembungkus luarnya tidak menghalangi sentuhan */
-.welcome-box {
-  pointer-events: none !important;
-}
-
-.welcome-box > * {
-  pointer-events: auto !important;
 }
