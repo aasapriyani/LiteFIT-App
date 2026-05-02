@@ -22,7 +22,7 @@ import { Keyboard } from '@capacitor/keyboard';
 export class HomePage implements OnInit {
   currentTab: string = 'LATIHAN'; 
   userName: string = "";
-  isFirstTime: boolean = true; 
+  isFirstTime: boolean = true;
   activities: any[] = [];
   isRunning: boolean = false;
   seconds: number = 0;
@@ -90,6 +90,7 @@ export class HomePage implements OnInit {
 
     this.streak = savedStreak ? savedStreak : 0;
     this.currentQuote = this.quotes[Math.floor(Math.random() * this.quotes.length)];
+    
 
     // Inisialisasi daftar aktivitas
     this.activities = [
@@ -148,6 +149,7 @@ export class HomePage implements OnInit {
     this.currentTab = 'LATIHAN';
     this.chimeSound.play().catch(e => console.log('Audio error', e));
 
+    
     const welcomeAlert = await this.alertCtrl.create({
       header: `Selamat Datang, ${this.userName}! 🚀`,
       subHeader: 'Mari Mulai Hidup Sehat',
@@ -208,6 +210,21 @@ export class HomePage implements OnInit {
     const finished = this.activities.filter(a => a.done).length;
     return Math.round((finished / this.activities.length) * 100);
   }
+  // --- GANTI TOTAL BAGIAN INI ---
+  // --- MULAI TEMPEL DARI SINI ---
+  async ionViewDidEnter() {
+    const name = await this.storage.get('userName');
+    
+    if (name) {
+      // Jika ada nama di storage
+      this.userName = name;
+      this.isFirstTime = false; // Matikan tampilan input nama, munculkan profil
+    } else {
+      // Jika storage kosong
+      this.isFirstTime = true; // Munculkan tampilan input nama
+    }
+  }
+  // --- BERHENTI TEMPEL DI SINI (Lanjut ke getLevel kamu) ---
 
   getLevel() {
     const totalDone = this.activities.filter(a => a.done).length;

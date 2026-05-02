@@ -281,3 +281,125 @@ ion-header {
   position: relative !important;
   z-index: 9999 !important; 
 }
+/* Taruh di paling bawah file */
+
+.btn-start {
+  position: relative !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+  margin-top: 30px !important; 
+  display: block !important;
+  width: 100% !important;
+}
+/* --- SOLUSI UTAMA LOGO & CENTANG TERHALANG --- */
+
+/* 1. Paksa Ikon (Logo) Muncul di Depan & Berwarna */
+/* ============================================================
+   KODE FINAL: FIX SCROLL, TOMBOL ORANGE, & GRID AKTIVITAS
+   ============================================================ */
+
+/* 1. FIX SCROLL & LAYAR MACET (WAJIB) */
+ion-content {
+  --overflow: scroll !important;
+  overflow: auto !important;
+  touch-action: pan-y !important; /* Agar jempol bisa scroll lancar */
+  --background: #121212; /* Background aplikasi kamu */
+}
+
+.sporty-layout {
+  display: block !important;
+  height: auto !important;
+  min-height: 101%; /* Memaksa Android mengizinkan scroll */
+  padding-bottom: 50px;
+}
+
+/* 2. FIX TOMBOL ORANGE (Hanya untuk tombol Mulai) */
+.btn-start, .pembungkus-orange-tombol, .button-warning {
+  --background: #ff9800 !important;
+  --background-activated: #e68a00 !important;
+  --color: white !important;
+  --border-radius: 30px !important;
+  height: 60px !important;
+  font-weight: 800 !important;
+  font-size: 1.1rem !important;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4) !important;
+  margin-top: 15px;
+  --box-shadow: none; /* Hapus shadow bawaan ionic */
+}
+
+/* 3. GRID AKTIVITAS (PUTIH -> WARNA-WARNI) */
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 10px 0 120px 0; /* Padding bawah extra agar tidak tertutup nav */
+  overflow: visible !important;
+}
+
+.activity-box {
+  position: relative;
+  z-index: 5;
+  background: #ffffff !important; /* Keadaan awal PUTIH */
+  border-radius: 15px;
+  padding: 20px 10px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  overflow: visible !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+  /* Ikon saat kotak masih putih (Warna-warni sesuai tema) */
+  .act-icon {
+    color: var(--act-color) !important;
+    font-size: 2.2rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative;
+    z-index: 10 !important;
+  }
+
+  .act-name {
+    color: #333 !important; /* Teks gelap di background putih */
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+}
+
+/* --- SAAT DI-KLIK (DONE / SELESAI) --- */
+.activity-box.done {
+  background: var(--act-color) !important; /* Box jadi penuh warna */
+  z-index: 20 !important;
+  transform: scale(0.98); /* Efek sedikit menekan saat selesai */
+
+  /* PAKSA Logo & Teks jadi PUTIH saat box berwarna */
+  .act-icon, .act-name {
+    color: #ffffff !important;
+    position: relative !important;
+    z-index: 100 !important; /* Lapisan paling depan */
+  }
+
+  /* PAKSA Ikon Centang Muncul di Pojok */
+  .check-icon {
+    color: #ffffff !important;
+    font-size: 1.5rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: 5px;
+    right: 5px;
+    z-index: 110 !important;
+  }
+}
+
+/* 4. INPUT NAMA (Agar tidak macet diklik) */
+.orange-border-box input, .native-input {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 100 !important;
+}
+
+/* 5. FOOTER / NAVIGASI BAWAH */
+ion-footer {
+  background: #1a1a1a !important;
+  z-index: 999 !important;
+}

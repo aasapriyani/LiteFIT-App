@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="pembungkus-scroll">
   <div class="sporty-layout">
     <div class="container-padding">
 
@@ -19,24 +19,11 @@
           <p style="margin-bottom: 25px;">Siapa nama atlet hari ini?</p>
           
           <div class="orange-border-box">
-  <input 
-    [(ngModel)]="userName" 
-    placeholder="Masukkan Nama Anda" 
-    class="native-input">
-</div>
+            <input [(ngModel)]="userName" placeholder="Masukkan Nama Anda" class="native-input">
+          </div>
 
-
-
-              
-            
-          
-          <ion-button 
-            (click)="saveInitialName()"
-            expand="block" 
-            shape="round" 
-            color="warning" 
-            class="btn-start" 
-            style="height: 60px; font-weight: bold; font-size: 1.1rem;"
+          <ion-button class="btn-start" (click)="saveInitialName()" expand="block" shape="round" color="warning" 
+            style="height: 60px; font-weight: bold; font-size: 1.1rem; margin-top: 20px;"
             [disabled]="!userName || userName.trim().length === 0">
             MULAI SEKARANG
           </ion-button>
@@ -64,16 +51,12 @@
         </div>
 
         <div class="mission-grid">
-          <div *ngFor="let item of activities" 
-               class="activity-box" 
-               [class.done]="item.done" 
-               [style.--act-color]="item.color" 
-               (click)="toggleDone(item)">
+          <div *ngFor="let item of activities" class="activity-box" [class.done]="item.done" [style.--act-color]="item.color" (click)="toggleDone(item)">
             <div class="icon-circle">
-              <ion-icon [name]="item.icon" class="act-icon"></ion-icon>
+              <ion-icon [name]="item.icon" class="act-icon" style="position: relative; z-index: 100 !important;"></ion-icon>
             </div>
             <p class="act-name">{{ item.name }}</p>
-            <ion-icon *ngIf="item.done" name="checkmark-done-circle" class="check-icon"></ion-icon>
+            <ion-icon *ngIf="item.done" name="checkmark-done-circle" class="check-icon" style="position: absolute; top: 5px; right: 5px; z-index: 101 !important;"></ion-icon>
           </div>
         </div>
       </div>
@@ -96,14 +79,10 @@
           </div>
           <p class="chart-label">Pencapaian: {{ getPercent() }}%</p>
         </div>
-        <ion-button fill="clear" color="light" expand="block" (click)="resetName()">
-  GANTI NAMA PROFIL
-</ion-button>
-</div>
+        <ion-button fill="clear" color="light" expand="block" (click)="resetName()">GANTI NAMA PROFIL</ion-button>
+      </div>
 
-    </div>
-  </div>
-</ion-content>
+    </div> </div> </ion-content>
 
 <ion-footer class="ion-no-border" *ngIf="!isFirstTime" style="padding-bottom: env(safe-area-inset-bottom);">
   <div class="bottom-nav">
@@ -115,3 +94,4 @@
     </div>
   </div>
 </ion-footer>
+
