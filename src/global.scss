@@ -59,3 +59,19 @@ ion-input {
   margin: 0 !important;
   padding: 0 !important;
 }
+/* --- TAMBAHKAN KODE INI DI BAWAHNYA --- */
+
+/* REVISI GLOBAL CSS */
+
+html, body {
+  height: 100%;
+  width: 100%;
+  // Ini kuncinya biar bisa scroll lagi:
+  overflow: auto !important; 
+}
+
+ion-content {
+  // Paksa fitur scroll bawaan Ionic aktif
+  --overflow: scroll !important;
+  overflow: auto !important;
+}

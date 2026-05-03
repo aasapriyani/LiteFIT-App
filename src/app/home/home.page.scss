@@ -403,3 +403,55 @@ ion-footer {
   background: #1a1a1a !important;
   z-index: 999 !important;
 }
+/* 1. Paksa Tombol Supaya Bisa Disentuh */
+.btn-start {
+  position: relative;
+  z-index: 999 !important; 
+  pointer-events: auto !important; 
+  margin-top: 20px;
+}
+
+/* 2. Beri Izin Klik pada Box Onboarding */
+.onboarding, .welcome-box, .orange-border-box {
+  pointer-events: auto !important;
+}
+
+/* 3. Pastikan Input Nama Bisa Diketik */
+.native-input {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 1000;
+}
+
+/* 4. Menu Bawah (Tabs) Agar Selalu Di Depan */
+.bottom-nav {
+  z-index: 2000 !important;
+  pointer-events: auto !important;
+}
+/* Jurus Supaya Bisa Scroll */
+ion-content {
+  --overflow: scroll !important; /* Paksa Ionic supaya bisa scroll */
+  overflow: auto !important;
+  height: 100%;
+}
+
+.onboarding-container, .main-container {
+  min-height: 101%; /* Pancing supaya sistem deteksi ada konten yang lebih panjang */
+  padding-bottom: 80px; /* Kasih ruang di bawah biar nggak ketutupan menu tab */
+  display: block !important; 
+}
+/* Paksa Background Pindah ke Lantai Paling Bawah */
+.background-image-class { // Ganti dengan nama class background kamu
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1 !important; /* WAJIB MINUS: Supaya dia di belakang semua tombol */
+  pointer-events: none !important; /* WAJIB: Supaya gambar ini TIDAK BISA DISENTUH jari */
+  object-fit: cover;
+}
+.pembungkus-scroll {
+  --overflow: scroll !important;
+  overflow: auto !important;
+}
