@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { IonicModule, AlertController, Platform } from '@ionic/angular'; 
+import { Platform } from '@ionic/angular'; 
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { 
+  IonHeader, IonToolbar, IonTitle, IonContent, IonButton, 
+  IonIcon, IonFooter, IonItem, IonInput, IonList, IonAlert 
+} from '@ionic/angular/standalone';
+import { AlertController } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -10,14 +16,27 @@ import {
   eggOutline, shieldHalfOutline, flameOutline, trophyOutline,
   accessibilityOutline, refreshCircleOutline, walkOutline, fitnessOutline, waterOutline, eyeOutline
 } from 'ionicons/icons';
-import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [
+    CommonModule, 
+    FormsModule,
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonContent, 
+    IonButton, 
+    IonIcon, 
+    IonFooter, 
+    IonItem, 
+    IonInput,
+    IonList,
+    IonAlert
+  ]
 })
 export class HomePage implements OnInit {
   currentTab: string = 'LATIHAN'; 
@@ -29,14 +48,24 @@ export class HomePage implements OnInit {
   timer: any;
   currentQuote: string = "";
   streak: number = 0;
-  // ... baris streak: number = 0;
 
-  // Pastikan ada di dalam class
-  
-
-  
-  
-
+  // Expose icons for template binding with lookup capability
+  public icons: any = {
+    'person-circle': personCircle,
+    'flash': flash,
+    'stats-chart': statsChart,
+    'checkmark-done-circle': checkmarkDoneCircle,
+    'egg-outline': eggOutline,
+    'shield-half-outline': shieldHalfOutline,
+    'flame-outline': flameOutline,
+    'trophy-outline': trophyOutline,
+    'accessibility-outline': accessibilityOutline,
+    'refresh-circle-outline': refreshCircleOutline,
+    'walk-outline': walkOutline,
+    'fitness-outline': fitnessOutline,
+    'water-outline': waterOutline,
+    'eye-outline': eyeOutline
+  };
 
   // Audio Lokal
   whistleSound = new Audio('assets/sounds/whistle.mp3');
@@ -72,14 +101,17 @@ export class HomePage implements OnInit {
     });
   }
 
-
-  
-
-
-
   async ngOnInit() {
     await this.storage.create();
-    
+    this.loadState();
+    this.initNotifications();
+  }
+
+  async ionViewDidEnter() {
+    await this.loadState();
+  }
+
+  private async loadState() {
     this.whistleSound.load();
     this.chimeSound.load();
 
@@ -90,10 +122,9 @@ export class HomePage implements OnInit {
 
     this.streak = savedStreak ? savedStreak : 0;
     this.currentQuote = this.quotes[Math.floor(Math.random() * this.quotes.length)];
-    
 
     // Inisialisasi daftar aktivitas
-    this.activities = [
+    const defaultActivities = [
       { id: 1, name: 'PEREGANGAN', icon: 'accessibility-outline', done: false, color: '#4facfe' },
       { id: 2, name: 'PUTAR BAHU', icon: 'refresh-circle-outline', done: false, color: '#ff8c00' },
       { id: 3, name: 'JALAN TEMPAT', icon: 'walk-outline', done: false, color: '#00dbde' },
@@ -107,26 +138,17 @@ export class HomePage implements OnInit {
       this.isFirstTime = false;
       this.currentTab = 'LATIHAN';
       
+      const savedActivities = await this.storage.get('activities');
       if (lastDate !== today) {
-        this.activities.forEach(a => a.done = false);
+        this.activities = defaultActivities;
         await this.storage.set('activities', this.activities);
         await this.storage.set('lastUpdateDate', today);
       } else {
-        const savedActivities = await this.storage.get('activities');
-        if (savedActivities) {
-          this.activities = savedActivities;
-        }
+        this.activities = savedActivities || defaultActivities;
       }
-
-      // Alert selamat datang kembali
-      setTimeout(async () => {
-        const backAlert = await this.alertCtrl.create({
-          header: `Halo Lagi, ${this.userName}! 👋`,
-          message: 'Sudah siap melanjutkan latihanmu?',
-          buttons: ['GAS POL!']
-        });
-        await backAlert.present();
-      }, 800);
+    } else {
+      this.isFirstTime = true;
+      this.activities = defaultActivities;
     }
   }
 
@@ -144,12 +166,12 @@ export class HomePage implements OnInit {
     this.userName = this.userName.toUpperCase();
     await this.storage.set('userName', this.userName);
     await this.storage.set('lastUpdateDate', new Date().toDateString());
+    await this.storage.set('activities', this.activities);
     
     this.isFirstTime = false;
     this.currentTab = 'LATIHAN';
     this.chimeSound.play().catch(e => console.log('Audio error', e));
 
-    
     const welcomeAlert = await this.alertCtrl.create({
       header: `Selamat Datang, ${this.userName}! 🚀`,
       subHeader: 'Mari Mulai Hidup Sehat',
@@ -181,56 +203,60 @@ export class HomePage implements OnInit {
       this.chimeSound.play().catch(e => console.log('Audio error', e));
       this.streak++;
       this.storage.set('streak', this.streak);
+    } else if (this.streak > 0) {
+      this.streak--;
+      this.storage.set('streak', this.streak);
     }
     this.storage.set('activities', this.activities);
   }
 
-  async resetName() {
-    const alert = await this.alertCtrl.create({
-      header: 'Ganti Profil?',
-      message: 'Semua progres akan dihapus.',
-      buttons: [
-        { text: 'Batal', role: 'cancel' },
+  async initNotifications() {
+    try {
+      const permission = await LocalNotifications.checkPermissions();
+      if (permission.display !== 'granted') {
+        await LocalNotifications.requestPermissions();
+      }
+      
+      await this.scheduleReminder();
+    } catch (e) {
+      console.error('Notification error:', e);
+    }
+  }
+
+  async scheduleReminder() {
+    // Cek jika sudah ada notifikasi terjadwal (opsional, tapi bagus untuk mencegah duplikasi)
+    const pending = await LocalNotifications.getPending();
+    if (pending.notifications.length > 0) {
+      return; 
+    }
+
+    await LocalNotifications.schedule({
+      notifications: [
         {
-          text: 'Ya, Ganti',
-          handler: async () => {
-            await this.storage.clear();
-            this.activities.forEach(a => a.done = false);
-            this.userName = '';
-            this.streak = 0;
-            this.isFirstTime = true;
-          }
+          title: "LiteFIT 🔥",
+          body: "Waktunya gerak kembali!",
+          id: 1,
+          schedule: { 
+            allowWhileIdle: true,
+            every: 'hour'
+          },
+          sound: 'chime.mp3'
         }
       ]
     });
-    await alert.present();
   }
 
   getPercent() {
+    if (!this.activities || this.activities.length === 0) return 0;
     const finished = this.activities.filter(a => a.done).length;
     return Math.round((finished / this.activities.length) * 100);
   }
-  // --- GANTI TOTAL BAGIAN INI ---
-  // --- MULAI TEMPEL DARI SINI ---
-  async ionViewDidEnter() {
-    const name = await this.storage.get('userName');
-    
-    if (name) {
-      // Jika ada nama di storage
-      this.userName = name;
-      this.isFirstTime = false; // Matikan tampilan input nama, munculkan profil
-    } else {
-      // Jika storage kosong
-      this.isFirstTime = true; // Munculkan tampilan input nama
-    }
-  }
-  // --- BERHENTI TEMPEL DI SINI (Lanjut ke getLevel kamu) ---
 
   getLevel() {
-    const totalDone = this.activities.filter(a => a.done).length;
-    if (totalDone <= 1) return { rank: "NEWBIE", icon: "egg-outline", color: "#aaa" };
-    if (totalDone <= 3) return { rank: "WARRIOR", icon: "shield-half-outline", color: "#4facfe" };
-    if (totalDone <= 5) return { rank: "ELITE", icon: "flame-outline", color: "#ff8c00" };
-    return { rank: "LEGEND", icon: "trophy-outline", color: "#f53d3d" };
+    const totalDone = this.activities ? this.activities.filter(a => a.done).length : 0;
+    if (totalDone <= 1) return { rank: "NEWBIE", icon: eggOutline, color: "#aaa" };
+    if (totalDone <= 3) return { rank: "WARRIOR", icon: shieldHalfOutline, color: "#4facfe" };
+    if (totalDone <= 5) return { rank: "ELITE", icon: flameOutline, color: "#ff8c00" };
+    return { rank: "LEGEND", icon: trophyOutline, color: "#f53d3d" };
   }
 }

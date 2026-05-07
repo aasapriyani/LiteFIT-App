@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">LiteFIT_Real</string>
-    <string name="title_activity_main">LiteFIT_Real</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">LiteFIT</string>
+    <string name="title_activity_main">LiteFIT</string>
+    <string name="package_name">com.litefit.kesehatan</string>
+    <string name="custom_url_scheme">com.litefit.kesehatan</string>
 </resources>

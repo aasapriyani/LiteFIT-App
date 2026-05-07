@@ -75,3 +75,33 @@ ion-content {
   --overflow: scroll !important;
   overflow: auto !important;
 }
+/* --- FIX TEMBOK GAIB JILID 2 --- */
+
+// 1. Pastikan semua teks berwarna gelap agar kelihatan di background putih
+/* --- FIX TULISAN AGAR KELIHATAN --- */
+
+// Hanya targetkan teks di area putih/terang
+/* --- FIX TULISAN PINTAR --- */
+
+// 1. Targetkan hanya kartu putih tempat input nama
+.login-card {
+  * {
+    color: #1a1a1a !important; // Tulisan di dalam kotak putih jadi hitam
+  }
+  ion-input {
+    --color: #000000 !important; // Tulisan pas ngetik jadi hitam pekat
+  }
+}
+
+// 2. Targetkan Welcome Message (biasanya di luar card)
+// Ganti .welcome-text dengan nama class yang kamu pakai untuk teks "Welcome"
+.welcome-text, .user-greeting {
+  color: #ffffff !important; // Tetap putih supaya kontras dengan background biru/sporty
+}
+
+// 3. Biarkan yang lain tetap putih (seperti modal hitam tadi)
+ion-modal, .black-box {
+  * {
+    color: #ffffff !important; 
+  }
+}

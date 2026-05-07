@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="header-blue" style="--padding-top: env(safe-area-inset-top);">
+  <ion-toolbar class="header-blue">
     <ion-title>
       <span class="brand-lite">Lite</span><span class="brand-fit">FIT</span> 🔥
     </ion-title>
@@ -9,11 +9,12 @@
 <ion-content [fullscreen]="true" class="pembungkus-scroll">
   <div class="sporty-layout">
     <div class="container-padding">
+      
 
-      <div *ngIf="isFirstTime"  class="onboarding">
+      <div *ngIf="isFirstTime" class="onboarding">
         <div class="welcome-box">
           <div class="icon-onboarding">
-            <ion-icon name="person-circle" style="font-size: 6rem; color: #ff8800;"></ion-icon>
+            <ion-icon [icon]="icons['person-circle']" style="font-size: 6rem; color: #ff8800;"></ion-icon>
           </div>
           <h2 style="font-weight: 800; font-size: 1.8rem;">Selamat Datang!</h2>
           <p style="margin-bottom: 25px;">Siapa nama atlet hari ini?</p>
@@ -53,10 +54,10 @@
         <div class="mission-grid">
           <div *ngFor="let item of activities" class="activity-box" [class.done]="item.done" [style.--act-color]="item.color" (click)="toggleDone(item)">
             <div class="icon-circle">
-              <ion-icon [name]="item.icon" class="act-icon" style="position: relative; z-index: 100 !important;"></ion-icon>
+              <ion-icon [icon]="icons[item.icon]" class="act-icon" style="position: relative; z-index: 100 !important;"></ion-icon>
             </div>
             <p class="act-name">{{ item.name }}</p>
-            <ion-icon *ngIf="item.done" name="checkmark-done-circle" class="check-icon" style="position: absolute; top: 5px; right: 5px; z-index: 101 !important;"></ion-icon>
+            <ion-icon *ngIf="item.done" [icon]="icons['checkmark-done-circle']" class="check-icon" style="position: absolute; top: 5px; right: 5px; z-index: 101 !important;"></ion-icon>
           </div>
         </div>
       </div>
@@ -64,7 +65,7 @@
       <div *ngIf="!isFirstTime && currentTab === 'PROGRES'">
         <div class="level-card">
           <div class="level-badge" [style.background]="getLevel().color">
-            <ion-icon [name]="getLevel().icon"></ion-icon>
+            <ion-icon [icon]="getLevel().icon"></ion-icon>
             <span>RANK: {{ getLevel().rank }}</span>
           </div>
           <h3 class="profile-name">{{ userName }}</h3>
@@ -79,18 +80,19 @@
           </div>
           <p class="chart-label">Pencapaian: {{ getPercent() }}%</p>
         </div>
-        <ion-button fill="clear" color="light" expand="block" (click)="resetName()">GANTI NAMA PROFIL</ion-button>
       </div>
 
-    </div> </div> </ion-content>
+    </div>
+  </div>
+</ion-content>
 
 <ion-footer class="ion-no-border" *ngIf="!isFirstTime" style="padding-bottom: env(safe-area-inset-bottom);">
   <div class="bottom-nav">
     <div class="nav-item" [class.active]="currentTab === 'LATIHAN'" (click)="currentTab = 'LATIHAN'">
-      <ion-icon name="flash"></ion-icon><span>LATIHAN</span>
+      <ion-icon [icon]="icons['flash']"></ion-icon><span>LATIHAN</span>
     </div>
     <div class="nav-item" [class.active]="currentTab === 'PROGRES'" (click)="currentTab = 'PROGRES'">
-      <ion-icon name="stats-chart"></ion-icon><span>PROGRES</span>
+      <ion-icon [icon]="icons['stats-chart']"></ion-icon><span>PROGRES</span>
     </div>
   </div>
 </ion-footer>

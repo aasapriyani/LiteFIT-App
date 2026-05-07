@@ -299,11 +299,30 @@ ion-header {
    ============================================================ */
 
 /* 1. FIX SCROLL & LAYAR MACET (WAJIB) */
+/* 1. DASAR LAYOUT & BACKGROUND */
+/* 1. DASAR LAYOUT & BACKGROUND */
+/* 1. DASAR & BACKGROUND */
+/* 1. RESET ION-CONTENT */
 ion-content {
   --overflow: scroll !important;
   overflow: auto !important;
   touch-action: pan-y !important; /* Agar jempol bisa scroll lancar */
   --background: #121212; /* Background aplikasi kamu */
+}
+
+/* 1. JURUS SCROLL & LAYOUT UTAMA */
+ion-content {
+  --overflow: scroll !important;
+  overflow: auto !important;
+  height: 100%;
+  display: block !important;
+}
+
+/* 1. JURUS SCROLL & LAYOUT (Fokus Biar di Tengah) */
+ion-content {
+  --overflow: scroll !important;
+  overflow: auto !important;
+  --background: transparent !important;
 }
 
 .sporty-layout {
@@ -392,11 +411,7 @@ ion-content {
 }
 
 /* 4. INPUT NAMA (Agar tidak macet diklik) */
-.orange-border-box input, .native-input {
-  pointer-events: auto !important;
-  position: relative;
-  z-index: 100 !important;
-}
+
 
 /* 5. FOOTER / NAVIGASI BAWAH */
 ion-footer {
@@ -454,4 +469,9 @@ ion-content {
 .pembungkus-scroll {
   --overflow: scroll !important;
   overflow: auto !important;
+}
+.orange-border-box input, .native-input {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 100 !important;
 }
